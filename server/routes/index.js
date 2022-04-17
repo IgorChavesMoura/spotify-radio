@@ -1,6 +1,7 @@
 import { logger } from "../util.js";
 import config from '../config.js';
 import { Controller } from "../controller/index.js";
+import { once } from "events";
 
 const {
     location,
@@ -38,6 +39,23 @@ async function routes(request, response) {
 
         return stream.pipe(response);
     }
+    if(method === 'GET' && url.includes('/stream')) {
+        const { onClose, stream } = controller.createClientStream();
+        request.once("close", onClose);
+
+        response.writeHead(200, {
+            'Content-Type': 'audio/mpeg',
+            'Accept-Rates': 'bytes'
+        });
+
+        return stream.pipe(response);
+    }
+    if(method === 'POST' && url === '/controller') {
+        const data = await once(request, 'data');
+        const item = JSON.parse(data);
+        const result = await controller.handleCommand(item);
+        return response.end(JSON.stringify(result));
+    }
 
     //files
     if(method === 'GET') {
@@ -58,7 +76,7 @@ async function routes(request, response) {
     }
 
     response.writeHead(404);
-    return stream.pipe;
+    response.end();
 }
 
 function handleError(error, response) {

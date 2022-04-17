@@ -52,7 +52,7 @@
         </div>
         <div class="container__section__user">
           <img src="./home/assets/user-eg.jpg" alt="user" />
-          Erick Wendel
+          Igor Moura
         </div>
       </div>
 
@@ -147,7 +147,7 @@
     </div>
 
     <div class="audio-player">
-      <audio id="audio" preload="none" controls autoplay src="./../../audio/songs/conversation.mp3"></audio>
+      <audio id="audio" preload="none" controls autoplay></audio>
 
       <div class="player-controls">
         <div class="player__actions">
@@ -170,9 +170,15 @@
   </div>
   <div class="device-bar hide">
     <i class="fas fa-volume-up"></i>
-    <p>Listening on Erick Wendel</p>
+    <p>Listening on Igor Moura</p>
   </div>
   <script src="./home/js/animation.js"></script>
+  <script>
+    // bypass to prevent cache
+    window.onload = () => {
+      document.getElementById('audio').src = 'stream?id=' + Date.now();
+    }
+  </script>
 </body>
 
 </html>

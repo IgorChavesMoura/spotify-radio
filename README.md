@@ -1,5 +1,15 @@
 # Spotify Radio
 
+## Live transmission feature for spotify
+
+### Concepts learned
+
+- N-Tier Architecture
+- Jest multi project test configuration
+- Audio manipulation with SoX
+- Stream manipulation in Node.js (Readable, Writable, Transform, PassThrough)
+- Spawn child processes in Node.js
+
 ### Credits to audio used
 
 #### Transmission
